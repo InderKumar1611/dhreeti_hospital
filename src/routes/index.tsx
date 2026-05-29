@@ -185,7 +185,7 @@ function Page() {
           <div className="rounded-2xl overflow-hidden shadow-card min-h-[320px] border border-border">
             <iframe
               title="Dhreeti Clinic location"
-              src="https://www.google.com/maps?q=Maulabag,+Ara,+Bhojpur,+Bihar+802301&output=embed"
+              src="https://www.google.com/maps?q=25.5632589,84.6597406&output=embed"
               className="w-full h-full min-h-[320px] border-0"
               loading="lazy"
             />
