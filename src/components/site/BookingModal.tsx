@@ -1,16 +1,26 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { X } from "lucide-react";
 import { useLang } from "@/lib/lang-context";
 
 export function BookingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t } = useLang();
-  const [form, setForm] = useState({ name: "", phone: "", date: "", service: "General Medicine", message: "" });
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [date, setDate] = useState("");
+  const [service, setService] = useState("General Medicine");
+  const [message, setMessage] = useState("");
+
+  const handleName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value), []);
+  const handlePhone = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value), []);
+  const handleDate = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setDate(e.target.value), []);
+  const handleService = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => setService(e.target.value), []);
+  const handleMessage = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value), []);
 
   if (!open) return null;
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const text = `*New Appointment Request*%0A%0AName: ${form.name}%0APhone: ${form.phone}%0ADate: ${form.date}%0AService: ${form.service}%0AMessage: ${form.message}`;
+    const text = `*New Appointment Request*%0A%0AName: ${name}%0APhone: ${phone}%0ADate: ${date}%0AService: ${service}%0AMessage: ${message}`;
     window.open(`https://wa.me/919901515300?text=${text}`, "_blank");
     onClose();
   };
@@ -25,16 +35,16 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
           </button>
         </div>
         <form onSubmit={submit} className="flex flex-col gap-3">
-          <input required placeholder={t.booking.name} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="px-4 py-3 rounded-lg border border-input bg-background min-h-12" />
-          <input required type="tel" placeholder={t.booking.phone} value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="px-4 py-3 rounded-lg border border-input bg-background min-h-12" />
-          <input required type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="px-4 py-3 rounded-lg border border-input bg-background min-h-12" />
-          <select value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })} className="px-4 py-3 rounded-lg border border-input bg-background min-h-12">
+          <input required placeholder={t.booking.name} value={name} onChange={handleName} className="px-4 py-3 rounded-lg border border-input bg-background min-h-12" />
+          <input required type="tel" placeholder={t.booking.phone} value={phone} onChange={handlePhone} className="px-4 py-3 rounded-lg border border-input bg-background min-h-12" />
+          <input required type="date" value={date} onChange={handleDate} className="px-4 py-3 rounded-lg border border-input bg-background min-h-12" />
+          <select value={service} onChange={handleService} className="px-4 py-3 rounded-lg border border-input bg-background min-h-12">
             <option>General Medicine</option>
             <option>OB-GYN</option>
             <option>Ultrasound</option>
             <option>Pharmacy</option>
           </select>
-          <textarea placeholder={t.booking.message} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="px-4 py-3 rounded-lg border border-input bg-background min-h-24" rows={3} />
+          <textarea placeholder={t.booking.message} value={message} onChange={handleMessage} className="px-4 py-3 rounded-lg border border-input bg-background min-h-24" rows={3} />
           <button type="submit" className="bg-gradient-hero text-white font-semibold py-4 rounded-xl shadow-soft min-h-12">
             {t.booking.submit}
           </button>
