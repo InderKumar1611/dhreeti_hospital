@@ -33,7 +33,7 @@ export const Route = createFileRoute("/")({
   ),
 });
 
-const Page = React.memo(function Page() {
+function Page() {
   const { t } = useLang();
   const [booking, setBooking] = useState(false);
 
@@ -231,7 +231,7 @@ const Page = React.memo(function Page() {
       <BookingModal open={booking} onClose={() => setBooking(false)} />
     </div>
   );
-})
+}
 
 function ActionCard({ icon, title, desc, onClick, href }: { icon: React.ReactNode; title: string; desc: string; onClick?: () => void; href?: string }) {
   const cls = "group flex items-start gap-4 p-5 rounded-2xl bg-card border border-border hover:border-primary hover:shadow-soft transition-all text-start min-h-20 w-full";
