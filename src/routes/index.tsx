@@ -28,14 +28,23 @@ export const Route = createFileRoute("/")({
   }),
   component: () => (
     <LangProvider>
-      <Page />
+      <PageWithModal />
     </LangProvider>
   ),
 });
 
-function Page() {
-  const { t } = useLang();
+function PageWithModal() {
   const [booking, setBooking] = useState(false);
+  return (
+    <>
+      <Page onBook={() => setBooking(true)} />
+      <BookingModal open={booking} onClose={() => setBooking(false)} />
+    </>
+  );
+}
+
+function Page({ onBook }: { onBook: () => void }) {
+  const { t } = useLang();
 
   return (
     <div className="min-h-screen bg-background">
@@ -53,7 +62,7 @@ function Page() {
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-xl">{t.hero.subtitle}</p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <button onClick={() => setBooking(true)} className="bg-gradient-hero text-white font-semibold px-6 py-4 rounded-xl shadow-soft min-h-12 inline-flex items-center justify-center gap-2">
+              <button onClick={onBook} className="bg-gradient-hero text-white font-semibold px-6 py-4 rounded-xl shadow-soft min-h-12 inline-flex items-center justify-center gap-2">
                 <Calendar className="h-5 w-5" /> {t.hero.cta1}
               </button>
               <a href="tel:+919901515300" className="bg-card border-2 border-primary text-primary font-semibold px-6 py-4 rounded-xl min-h-12 inline-flex items-center justify-center gap-2">
@@ -90,7 +99,7 @@ function Page() {
             <p className="text-muted-foreground mt-2">{t.actionCenter.subtitle}</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <ActionCard icon={<Calendar className="h-7 w-7" />} title={t.actions.appointment} desc={t.actions.appointmentDesc} onClick={() => setBooking(true)} />
+            <ActionCard icon={<Calendar className="h-7 w-7" />} title={t.actions.appointment} desc={t.actions.appointmentDesc} onClick={onBook} />
             <ActionCard icon={<FlaskConical className="h-7 w-7" />} title={t.actions.lab} desc={t.actions.labDesc} href="https://wa.me/919901515300?text=I%20want%20to%20book%20a%20Blood%2FUrine%20test" />
             <ActionCard icon={<ShoppingBag className="h-7 w-7" />} title={t.actions.meds} desc={t.actions.medsDesc} href="https://wa.me/919901515300?text=I%20want%20to%20order%20medicines" />
           </div>
@@ -228,7 +237,6 @@ function Page() {
       </footer>
 
       <WhatsAppFab />
-      <BookingModal open={booking} onClose={() => setBooking(false)} />
     </div>
   );
 }
