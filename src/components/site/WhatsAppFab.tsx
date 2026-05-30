@@ -11,7 +11,7 @@ export function WhatsAppFab() {
       style={{ backgroundColor: "#25D366" }}
     >
       <MessageCircle className="h-7 w-7" fill="white" />
-      <span className="absolute inset-0 rounded-full animate-ping opacity-30" style={{ backgroundColor: "#25D366" }} />
+      
     </a>
   );
 }
