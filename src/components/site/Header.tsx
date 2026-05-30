@@ -19,7 +19,7 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md border-b border-border">
+    <header className="sticky top-0 z-40 bg-background border-b border-border">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-3">
         <a href="#home" className="flex items-center gap-2 min-w-0">
           <img src={logo} alt="Dhreeti Clinic" className="h-11 w-11 object-contain" />
